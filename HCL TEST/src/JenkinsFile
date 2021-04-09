@@ -3,7 +3,7 @@ pipeline {
     stages {
         stage('Build Sample Application') {
             steps {
-                sh 'mvn -f HCL TEST/src/pom.xml clean package'
+                sh 'mvn -B -DskipTests HCL TEST/src/pom.xml clean package'
             }
             post {
                 success {
