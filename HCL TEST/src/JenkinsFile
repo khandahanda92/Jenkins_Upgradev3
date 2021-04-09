@@ -1,16 +1,14 @@
-
 pipeline {
-    agent {
-        any {
-            image 'maven:3-alpine' 
-            args '-v /root/.m2:/root/.m2' 
-        }
-    }
+    agent any
     stages {
-        stage('Build') { 
+        stage('Build Sample Application') {
             steps {
-                sh 'mvn -B -DskipTests HCL TEST/src/pom.xml clean package' 
+                sh 'mvn -f HCL TEST/src/pom.xml clean package'
+            }
+            post {
+                success {
+                    echo "Now Archiving the Artifacts...."
+                    archiveArtifacts artifacts: '**/*.war'
+                }
             }
         }
-    }
-}
